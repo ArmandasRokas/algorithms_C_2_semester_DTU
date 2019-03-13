@@ -37,7 +37,7 @@ type_t append(idar_t* t, type_t val){
     if(t->len > t->alloc-1){
         assert(grow(t) != 0);
     }
-    t ->li[t->len++] = val;
+    t->li[t->len++] = val;
     return val;
 }
 
