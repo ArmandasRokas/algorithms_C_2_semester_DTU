@@ -11,7 +11,8 @@ struct node* createNode(int);
 struct Graph
 {
     int numVertices;
-    struct node** adjLists;
+    struct node** adjLists; // referencer af referencer? List af lister?
+                            // reference to list of nodes ????
 };
 
 struct Graph* createGraph(int vertices);
