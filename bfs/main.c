@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 40  //size of queue
+#define SIZE 2000  //size of queue
 
 struct queue {
     int items[SIZE];
@@ -37,8 +37,9 @@ void printGraph(struct Graph* graph);
 int bfs(struct Graph* graph, int startVertex, int endVertex);
 
 
-/*
+/*FIXME gives worng answer in very big input
  * Returns distance from start vertex to end vertex
+ *
  */
 int bfs(struct Graph* graph, int startVertex, int endVertex) {
     struct queue* q = createQueue();
@@ -57,7 +58,7 @@ int bfs(struct Graph* graph, int startVertex, int endVertex) {
 
             if(graph->visited[adjVertex] == 0){
 
-                graph->adjLists[adjVertex]->distance = currentDistance+ 1;
+                graph->adjLists[adjVertex]->distance = currentDistance + 1;
                 graph->visited[adjVertex] = 1;
                 enqueue(q, adjVertex);
             }
@@ -71,7 +72,18 @@ int bfs(struct Graph* graph, int startVertex, int endVertex) {
  */
 int main()
 {
-    struct Graph* graph = createGraph(6);
+    int numOfVertices, numOfEdges;
+    scanf("%d", &numOfVertices);
+    scanf("%d", &numOfEdges);
+
+    struct Graph* graph = createGraph(numOfVertices);
+    for(int i = 0; i<numOfEdges; i++ ){
+        int v1;
+        int v2;
+        scanf("%d %d", &v1, &v2);
+        addEdge(graph, v1, v2);
+    }
+    printf("%d", bfs(graph,0,1));
 
     return 0;
 }
@@ -83,7 +95,7 @@ int main()
  */
 //int main()
 //{
-//    struct Graph* graph = createGraph(6);
+//    struct Graph* graph = createGraph(1000000);
 //    addEdge(graph, 0, 1);
 //    addEdge(graph, 0, 2);
 //    addEdge(graph, 1, 2);
@@ -172,7 +184,7 @@ int dequeue(struct queue* q){
         item = q->items[q->front];
         q->front++;
         if(q->front > q->rear){
-            printf("Resetting queue");
+          //  printf("Resetting queue");
             q->front = q->rear = -1;
         }
     }
