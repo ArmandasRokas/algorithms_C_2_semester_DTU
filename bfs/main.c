@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 40
+#define SIZE 40  //size of queue
 
 struct queue {
     int items[SIZE];
@@ -19,6 +19,7 @@ struct node
 {
     int vertex;
     struct node* next;
+    int distance;
 };
 
 struct node* createNode(int);
@@ -33,49 +34,66 @@ struct Graph
 struct Graph* createGraph(int vertices);
 void addEdge(struct Graph* graph, int src, int dest);
 void printGraph(struct Graph* graph);
-void bfs(struct Graph* graph, int startVertex);
+int bfs(struct Graph* graph, int startVertex, int endVertex);
 
-int main()
-{
-    struct Graph* graph = createGraph(6);
-    addEdge(graph, 0, 1);
-    addEdge(graph, 0, 2);
-    addEdge(graph, 1, 2);
-    addEdge(graph, 1, 4);
-    addEdge(graph, 1, 3);
-    addEdge(graph, 2, 4);
-    addEdge(graph, 3, 4);
 
-    bfs(graph, 0);
-
-    return 0;
-}
-
-void bfs(struct Graph* graph, int startVertex) {
-
+/*
+ * Returns distance from start vertex to end vertex
+ */
+int bfs(struct Graph* graph, int startVertex, int endVertex) {
     struct queue* q = createQueue();
 
     graph->visited[startVertex] = 1;
     enqueue(q, startVertex);
+    graph->adjLists[startVertex]->distance = 0;
 
     while(!isEmpty(q)){
-        printQueue(q);
         int currentVertex = dequeue(q);
-        printf("Visited %d\n", currentVertex);
-
         struct node* temp = graph->adjLists[currentVertex];
+        int currentDistance = graph->adjLists[currentVertex]->distance;
 
         while(temp) {
             int adjVertex = temp->vertex;
 
             if(graph->visited[adjVertex] == 0){
+
+                graph->adjLists[adjVertex]->distance = currentDistance+ 1;
                 graph->visited[adjVertex] = 1;
                 enqueue(q, adjVertex);
             }
             temp = temp->next;
         }
     }
+    return graph->adjLists[endVertex]->distance;
 }
+/*
+ * CodeJudge main
+ */
+int main()
+{
+    struct Graph* graph = createGraph(6);
+
+    return 0;
+}
+
+
+
+/*
+ * TEST main
+ */
+//int main()
+//{
+//    struct Graph* graph = createGraph(6);
+//    addEdge(graph, 0, 1);
+//    addEdge(graph, 0, 2);
+//    addEdge(graph, 1, 2);
+//    addEdge(graph, 1, 4);
+//    addEdge(graph, 1, 3);
+//    addEdge(graph, 2, 4);
+//    addEdge(graph, 3, 4);
+//    printf("\n Distance: %d ", bfs(graph, 0, 2));
+//    return 0;
+//}
 
 
 struct node* createNode(int v)
