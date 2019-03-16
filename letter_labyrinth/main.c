@@ -67,7 +67,7 @@ int bfs(struct Graph* graph, int startVertex, int endVertex) {
     return graph->adjLists[endVertex]->distance+1;
 }
 
-struct Graph* givenMatrixReturnGraf(char* matrix, int N){
+struct Graph* givenMatrixOfCharReturnGraph(char *matrix, int N){
 
     struct Graph* graph = createGraph(N*N);
 
@@ -188,7 +188,7 @@ int main()
             matrix[i][j] = letter;
         }
     }
-    struct Graph* graph = givenMatrixReturnGraf(&matrix[0][0], N);
+    struct Graph* graph = givenMatrixOfCharReturnGraph(&matrix[0][0], N);
 
  //   printGraph(graph);
     printf("%d", bfs(graph, 0, N*N-1));
