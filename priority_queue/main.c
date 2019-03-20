@@ -10,8 +10,9 @@ typedef struct{
 void insert(priorityQueue * pq, int x);
 void init(priorityQueue* pq);
 void bubbleUp(priorityQueue *pq, int n);
-
 void printQueue(priorityQueue * pq);
+int extractMax(priorityQueue *pq);
+void bubbleDown(priorityQueue *pq, int n);
 
 int main() {
     priorityQueue pq;
@@ -42,7 +43,7 @@ int main() {
                 break;
             case 'E':
                 scanf("%d", &integer);
-                printf("%d ", integer);
+                printf("%d\n", extractMax(&pq));
                 break;
             case 'P':
                 printQueue(&pq);
@@ -50,6 +51,34 @@ int main() {
         }
     }
     return 0;
+}
+
+int extractMax(priorityQueue *pq) {
+    int r = pq->intarr[1];
+    pq->intarr[1] = pq->intarr[pq->n];
+    pq->n--;
+    bubbleDown(pq, 1);
+    return r;
+}
+
+void bubbleDown(priorityQueue *pq, int n) {
+    int leftChild =  2*n;
+    int rightChild = 2*n+1;
+    int largest;
+    if(pq->intarr[leftChild] > pq->intarr[n] && leftChild <= pq->n){
+        largest = leftChild;
+    } else {
+        largest = n;
+    }
+    if(pq->intarr[rightChild] > pq->intarr[largest] && rightChild <= pq->n ){
+        largest = rightChild;
+    }
+    if(largest != n){
+        int temp = pq->intarr[n];
+        pq->intarr[n] = pq->intarr[largest];
+        pq->intarr[largest] = temp;
+        bubbleDown(pq, largest);
+    }
 }
 
 void printQueue(priorityQueue * pq) {
@@ -66,14 +95,11 @@ void init(priorityQueue* pq){
 
 
 void insert(priorityQueue * pq, int x){
-
-
     pq->n++;
     if(pq->n > SIZE){
         printf("Queue is full!");
         return;
     }
-
     pq->intarr[pq->n] = x;
     if (pq->n > 1) {
         bubbleUp(pq, pq->n);
@@ -81,7 +107,6 @@ void insert(priorityQueue * pq, int x){
 }
 
 void bubbleUp(priorityQueue *pq, int n) {
-
     // find parent index
     int parent = n / 2;
     if(parent < 1){
@@ -96,4 +121,6 @@ void bubbleUp(priorityQueue *pq, int n) {
         bubbleUp(pq, parent);
     }
 }
+
+
 
