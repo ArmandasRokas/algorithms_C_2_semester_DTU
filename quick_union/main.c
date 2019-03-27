@@ -73,11 +73,17 @@ void quick_union(int * array, int * treeSizes, int i, int j){
     }
 }
 /***********************************
- Find the root of the i. Returns the same i if the i is the root
+ Find the root of the i and compress the path. Returns the same i if the i is the root
  ***********************************/
 int find(int * array, int i){
-    while(i != array[i]){
-        i = array[i];
+    // ######### Without path compression ##########
+//    while(i != array[i]){
+//        i = array[i];
+//    }
+// ################################################
+
+    if(i != array[i]){
+        array[i] = find(array, array[i]);
     }
-    return i;
+    return array[i];
 }
