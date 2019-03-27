@@ -3,12 +3,19 @@
 
 int numOfSets;
 int * init();
-void union_quick_find(int * array, int i, int j);
+void quick_union(int * array, int * treeSizes, int i, int j);
 int find(int * array, int i);
 
 int main() {
 
     int * array = init(); // Why it does not work only by sending array reference to init() function
+
+    /*** Initializing treeSizes array ***/
+    int treeSizes[numOfSets]; // complains if  = {0}. Why?
+    for(int i = 0; i < numOfSets; i++){
+        treeSizes[i] = 1;
+    }
+
 
     int numOfOperations;
     scanf("%d", &numOfOperations);
@@ -27,7 +34,7 @@ int main() {
                 break;
             case 'U' :
                 scanf("%d %d", &i ,&j);
-                union_quick_find(array, i, j);
+                quick_union(array,treeSizes, i, j);
         }
     }
     return 0;
@@ -44,13 +51,19 @@ int * init(){
     return array;
 }
 /***********************************
- Perform union
+ Perform weighted quick union
  ***********************************/
-void union_quick_find(int * array, int i, int j){
+void quick_union(int * array, int * treeSizes, int i, int j){
     int r_i = find(array, i);
     int r_j = find(array, j);
     if (r_i != r_j){
-        array[r_i] = r_j;
+        if(treeSizes[r_i] < treeSizes[r_j]){
+            array[r_i] = r_j;
+            treeSizes[r_j] = treeSizes[r_i] + treeSizes[r_j];
+        } else {
+            array[r_j] = r_i;
+            treeSizes[r_i] = treeSizes[r_i] + treeSizes[r_j];
+        }
     }
 }
 /***********************************
