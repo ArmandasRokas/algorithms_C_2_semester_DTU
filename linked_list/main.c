@@ -50,8 +50,10 @@ int list_pop_front(list * container){
     list_element * temp = container->first;
     container->first = container->first->next;
     free(temp); // is this efficient considering on the memory used?
+    //temp=NULL;
     // What about list_element * temp pointer? Does it use the memory?
     // Does it frees after the function determinates?
+    //printf("%p", temp);
     return value;
 }
 

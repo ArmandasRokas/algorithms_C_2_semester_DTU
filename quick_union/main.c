@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include<malloc.h>
 
-int numOfSets;
-int * init();
+
+int * init(int numOfSets);
 void quick_union(int * array, int * treeSizes, int i, int j);
 int find(int * array, int i);
-int *init_treeSizes();
+int *init_treeSizes(int numOfSets);
 
 int main() {
 
-    int * array = init(); // Why it does not work only by sending array reference to init() function
-    int * treeSizes = init_treeSizes();
+    int numOfSets;
+    scanf("%d", &numOfSets);
+    int * array = init(numOfSets); // Why it does not work only by sending array reference to init() function
+    int * treeSizes = init_treeSizes(numOfSets);
 
     int numOfOperations;
     scanf("%d", &numOfOperations);
@@ -37,7 +39,7 @@ int main() {
 /**********************
  Initializing treeSizes array
  **********************/
-int * init_treeSizes() {
+int * init_treeSizes(int numOfSets) {
     int * treeSizes = (int *) malloc(numOfSets * sizeof(int)); // complains if  = {0}. Why?
     for(int i = 0; i < numOfSets; i++){
         treeSizes[i] = 1;
@@ -48,8 +50,7 @@ int * init_treeSizes() {
 /************************************
  Initializing an array for quick find
  ***********************************/
-int * init(){
-    scanf("%d", &numOfSets);
+int * init(int numOfSets){
     int * array = (int *) malloc(numOfSets * sizeof(int));
     for(int i = 0; i < numOfSets; i++){
         array[i] = i;
