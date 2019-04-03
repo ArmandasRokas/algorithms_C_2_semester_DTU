@@ -1,5 +1,14 @@
 #include <stdio.h>
 
+/*********************************
+The algorithm finds the longest sequence of the same value.
+
+ Running time: O(n), because it loops the array only once.
+ Increasing elements size by one it just need to do one more iteration.
+ This means linear time.
+ ????Is this enough?????
+***********************************/
+
 int longest_sequence(int *array, int count)
 {
     int length;
@@ -9,8 +18,7 @@ int longest_sequence(int *array, int count)
     {
         if (array[i + 1] == array[i])
             length++;
-        else
-        {
+        else {
              // length + 1 to count the last element too
             if (longest < length + 1)
                 longest = length + 1;
@@ -19,6 +27,9 @@ int longest_sequence(int *array, int count)
     }
     return longest;
 }
+
+
+
 
 int
 main()
