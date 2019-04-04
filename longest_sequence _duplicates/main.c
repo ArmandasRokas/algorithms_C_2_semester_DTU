@@ -4,9 +4,7 @@
 The algorithm finds the longest sequence of the same value.
 
  Running time: O(n), because it loops the array only once.
- Increasing elements size by one it just need to do one more iteration.
- This means linear time.
- ????Is this enough?????
+For hver element gør vi konstant nummer af skridt
 ***********************************/
 
 int longest_sequence(int *array, int count)
