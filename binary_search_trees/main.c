@@ -8,6 +8,30 @@ struct node {
     struct node * right;
     int size;
 };
+struct node* newNode(int key);
+struct node* insert(struct node* node, int key);
+struct node* search(struct node* root, int key);
+int initSize(struct node * root);
+void printSize(struct node * root);
+void print2DUtil(struct node * root, int space);
+int numOfLeafs(struct node * root);
+
+
+int main() {
+    struct node* root = NULL;
+    root = insert(root, 4);
+    insert(root, 2);
+    insert(root, 1);
+    insert(root, 3);
+    insert(root, 6);
+    insert(root, 5);
+    print2DUtil(root, 0);
+    //printSize(root);
+    // printf("\n Minimum value in BST is %d", minValue(root));
+    //   getchar();
+    printf("Num of leafs: %d \n", numOfLeafs(root));
+    return 0;
+}
 
 struct node* newNode(int key)
 {
@@ -43,6 +67,15 @@ struct node* insert(struct node* node, int key)
         return node;
     }
 }
+int numOfLeafs(struct node * root){
+    if(root == NULL){
+        return 0;
+    }
+    if(root->left == NULL && root->right == NULL ){
+        return 1;
+    }
+    return numOfLeafs(root->left) + numOfLeafs(root->right);
+}
 
 // C function to search a given key in a given BST
 struct node* search(struct node* root, int key)
@@ -68,6 +101,15 @@ int initSize(struct node * root){
     return root->size;
 }
 
+void printSize(struct node * root){
+    if(root == NULL){
+        return;
+    }
+    printSize(root->left);
+    printf("%d\n", root->size);
+    printSize(root->right);
+}
+
 void print2DUtil(struct node * root, int space)
 {
     // Base case
@@ -90,27 +132,4 @@ void print2DUtil(struct node * root, int space)
     // Process left child
     print2DUtil(root->left, space);
 }
-void printSize(struct node * root){
-    if(root == NULL){
-        return;
-    }
-    printSize(root->left);
-    printf("%d\n", root->size);
-    printSize(root->right);
-}
 
-int main() {
-    struct node* root = NULL;
-    root = insert(root, 4);
-    insert(root, 2);
-    insert(root, 1);
-    insert(root, 3);
-    insert(root, 6);
-    insert(root, 5);
-//    print2DUtil(root, 0);
-    printf("%d\n", initSize(root));
-    printSize(root);
-   // printf("\n Minimum value in BST is %d", minValue(root));
- //   getchar();
-    return 0;
-}
